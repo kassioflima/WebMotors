@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebMotors.Application\WebMotors.Application.csproj" />
+    <ProjectReference Include="..\WebMotors.Data\WebMotors.Data.csproj" />
+    <ProjectReference Include="..\WebMotors.Domain.Shared\WebMotors.Domain.Shared.csproj" />
+    <ProjectReference Include="..\WebMotors.Domain\WebMotors.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
