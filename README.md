@@ -311,8 +311,8 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👥 Equipe
 
-- **Desenvolvedor**: [Seu Nome]
-- **Email**: [seu.email@exemplo.com]
+- **Desenvolvedor**: [Kássio Fernandes Lima]
+- **Email**: [kassioflima@gmail.com]
 
 ---
 
