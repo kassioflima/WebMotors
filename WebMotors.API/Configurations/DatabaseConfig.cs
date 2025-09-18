@@ -4,28 +4,27 @@ using Microsoft.Extensions.DependencyInjection;
 using WebMotors.Data.Context;
 using WebMotors.Domain.Shared.Querys;
 
-namespace WebMotors.API.Configurations
+namespace WebMotors.API.Configurations;
+
+/// <summary>
+/// Configuration Database Context
+/// </summary>
+public static class DatabaseConfig
 {
     /// <summary>
-    /// Configuration Database Context
+    /// Add Context in startup.
     /// </summary>
-    public static class DatabaseConfig
+    /// <param name="services"></param>
+    /// <param name="Configuration"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddContextConfiguration(this IServiceCollection services, IConfiguration Configuration)
     {
-        /// <summary>
-        /// Add Context in startup.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="Configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddContextConfiguration(this IServiceCollection services, IConfiguration Configuration)
-        {
-            services.Configure<AppSettingsQueryResult>(Configuration.GetSection("ConnectionStrings"));
+        services.Configure<AppSettingsQueryResult>(Configuration.GetSection("ConnectionStrings"));
 
-            var connection = Configuration["ConnectionStrings:WebMotorsContext"];
+        var connection = Configuration["ConnectionStrings:WebMotorsContext"];
 
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
+        services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
 
-            return services;
-        }
+        return services;
     }
 }

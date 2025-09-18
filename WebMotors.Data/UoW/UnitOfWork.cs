@@ -1,50 +1,46 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Linq;
 using WebMotors.Data.Context;
 using WebMotors.Domain.Shared.Commands;
 using WebMotors.Domain.Shared.UoW.Interfaces;
 
-namespace WebMotors.Data.UoW
+namespace WebMotors.Data.UoW;
+
+public class UnitOfWork(DataContext context) : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    private readonly DataContext _context = context;
+
+    public CommandResponse Commit()
     {
-        private readonly DataContext _context;
+        var rowsAffected = int.MinValue;
 
-        public UnitOfWork(DataContext context)
+        try
         {
-            _context = context;
+            rowsAffected = _context.SaveChanges();
+            Log.Information("Commit realizado com sucesso. Rows affected: {RowsAffected}", rowsAffected);
         }
-        public CommandResponse Commit()
+        catch (Exception ex)
         {
-            var rowsAffected = int.MinValue;
+            rowsAffected = 0;
+            Log.Error(ex, "Erro no commit do UnitOfWork. Context: {ContextType}", _context.GetType().Name);
+        }
 
-            try
-            {
-                rowsAffected = _context.SaveChanges();
-                Console.WriteLine($"Commit: {rowsAffected} rows affected...");
-            }
-            catch (Exception ex)
-            {
-                rowsAffected = 0;
-                Console.WriteLine("Erro no commit: " + ex);
-            }
-
-            return new CommandResponse(rowsAffected > 0);
-        }
-        public void Rollback()
+        return new CommandResponse(rowsAffected > 0);
+    }
+    public void Rollback()
+    {
+        _context
+            .ChangeTracker
+            .Entries()
+            .ToList()
+            .ForEach(x => x.Reload());
+    }
+    public void Dispose()
+    {
+        if (_context != null)
         {
-            _context
-                .ChangeTracker
-                .Entries()
-                .ToList()
-                .ForEach(x => x.Reload());
-        }
-        public void Dispose()
-        {
-            if (_context != null)
-            {
-                _context.Dispose();
-            }
+            _context.Dispose();
         }
     }
 }

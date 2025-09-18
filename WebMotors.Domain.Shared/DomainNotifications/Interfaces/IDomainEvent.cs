@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace WebMotors.Domain.Shared.DomainNotifications.Interfaces
+namespace WebMotors.Domain.Shared.DomainNotifications.Interfaces;
+
+public interface IDomainEvent
 {
-    public interface IDomainEvent
-    {
-        int Version { get; }
-        DateTime OccurrenceDate { get; }
-    }
+    int Version { get; }
+    DateTime OccurrenceDate { get; }
 }

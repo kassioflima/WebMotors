@@ -1,9 +1,8 @@
-﻿namespace WebMotors.Domain.Shared.Commands.Interfaces
+﻿namespace WebMotors.Domain.Shared.Commands.Interfaces;
+
+public interface ICommandResult
 {
-    public interface ICommandResult
-    {
-        bool Success { get; set; }
-        string Message { get; set; }
-        object Data { get; set; }
-    }
+    bool Success { get; set; }
+    string Message { get; set; }
+    object Data { get; set; }
 }

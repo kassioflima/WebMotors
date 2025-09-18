@@ -1,10 +1,9 @@
 ﻿using System;
 using WebMotors.Domain.Shared.Commands;
 
-namespace WebMotors.Domain.Shared.UoW.Interfaces
+namespace WebMotors.Domain.Shared.UoW.Interfaces;
+
+public interface IUnitOfWork : IDisposable
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        CommandResponse Commit();
-    }
+    CommandResponse Commit();
 }

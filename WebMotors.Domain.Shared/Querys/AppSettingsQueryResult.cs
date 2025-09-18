@@ -1,7 +1,6 @@
-﻿namespace WebMotors.Domain.Shared.Querys
+﻿namespace WebMotors.Domain.Shared.Querys;
+
+public class AppSettingsQueryResult
 {
-    public class AppSettingsQueryResult
-    {
-        public string WebMotorsContext { get; set; }
-    }
+    public string WebMotorsContext { get; set; }
 }

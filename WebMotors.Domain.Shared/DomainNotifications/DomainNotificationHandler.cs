@@ -2,46 +2,45 @@
 using System.Collections.Generic;
 using WebMotors.Domain.Shared.DomainNotifications.Interfaces;
 
-namespace WebMotors.Domain.Shared.DomainNotifications
+namespace WebMotors.Domain.Shared.DomainNotifications;
+
+public class DomainNotificationHandler : IHandler<DomainNotification>
 {
-    public class DomainNotificationHandler : IHandler<DomainNotification>
+    private List<DomainNotification> notifications;
+
+    public DomainNotificationHandler()
     {
-        private List<DomainNotification> notifications;
+        notifications = new List<DomainNotification>();
+    }
 
-        public DomainNotificationHandler()
-        {
-            notifications = new List<DomainNotification>();
-        }
+    public void Handle(DomainNotification args)
+    {
+        notifications.Add(args);
+    }
 
-        public void Handle(DomainNotification args)
-        {
-            notifications.Add(args);
-        }
+    public List<DomainNotification> GetValues()
+    {
+        return notifications;
+    }
 
-        public List<DomainNotification> GetValues()
-        {
-            return notifications;
-        }
+    public bool HasNotifications()
+    {
+        return GetValues().Count > 0;
+    }
 
-        public bool HasNotifications()
-        {
-            return GetValues().Count > 0;
-        }
+    public void Dispose()
+    {
+        this.notifications = new List<DomainNotification>();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-        public void Dispose()
+    private bool disposed = false;
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!this.disposed)
         {
-            this.notifications = new List<DomainNotification>();
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private bool disposed = false;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                this.disposed = true;
-            }
+            this.disposed = true;
         }
     }
 }

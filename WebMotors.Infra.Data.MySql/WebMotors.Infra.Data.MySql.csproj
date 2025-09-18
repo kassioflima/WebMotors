@@ -1,15 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flunt" Version="2.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.1.16" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.16" />
+    <PackageReference Include="Flunt" Version="2.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -17,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dotz.Domain.Shared\Dotz.Domain.Shared.csproj" />
+    <ProjectReference Include="..\WebMotors.Domain.Shared\WebMotors.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>

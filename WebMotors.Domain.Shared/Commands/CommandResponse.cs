@@ -1,12 +1,6 @@
-﻿namespace WebMotors.Domain.Shared.Commands
-{
-    public class CommandResponse
-    {
-        public CommandResponse(bool success = false)
-        {
-            Success = success;
-        }
+﻿namespace WebMotors.Domain.Shared.Commands;
 
-        public bool Success { get; private set; }
-    }
+public class CommandResponse(bool success = false)
+{
+    public bool Success { get; private set; } = success;
 }

@@ -1,0 +1,40 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: webmotors-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD:-WebMotors@123}
+      - MSSQL_PID=Express
+    ports:
+      - "${SQL_SERVER_PORT:-1433}:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - webmotors-network
+    restart: unless-stopped
+
+  webmotors.api:
+    image: ${DOCKER_REGISTRY-}webmotorsapi
+    container_name: webmotors-api
+    build:
+      context: .
+      dockerfile: WebMotors.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
+      - ConnectionStrings__WebMotorsContext=Server=${DB_SERVER:-sqlserver};Database=${DB_NAME:-WebMotorsDB};User Id=sa;Password=${SA_PASSWORD:-WebMotors@123};MultipleActiveResultSets=true;TrustServerCertificate=true
+    ports:
+      - "${API_PORT_HTTP:-6000}:8080"
+      - "${API_PORT_HTTPS:-6001}:8081"
+    depends_on:
+      - sqlserver
+    networks:
+      - webmotors-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+
+networks:
+  webmotors-network:
+    driver: bridge

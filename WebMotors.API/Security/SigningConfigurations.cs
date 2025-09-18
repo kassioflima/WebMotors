@@ -1,35 +1,34 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
 
-namespace WebMotors.API.Security
+namespace WebMotors.API.Security;
+
+/// <summary>
+/// Signing Configurations
+/// </summary>
+public class SigningConfigurations
 {
     /// <summary>
-    /// Signing Configurations
+    /// Key
     /// </summary>
-    public class SigningConfigurations
+    public SecurityKey Key { get; }
+
+    /// <summary>
+    /// Signing Credentials
+    /// </summary>
+    public SigningCredentials SigningCredentials { get; }
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public SigningConfigurations()
     {
-        /// <summary>
-        /// Key
-        /// </summary>
-        public SecurityKey Key { get; }
-
-        /// <summary>
-        /// Signing Credentials
-        /// </summary>
-        public SigningCredentials SigningCredentials { get; }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public SigningConfigurations()
+        using (var provider = new RSACryptoServiceProvider(2048))
         {
-            using (var provider = new RSACryptoServiceProvider(2048))
-            {
-                Key = new RsaSecurityKey(provider.ExportParameters(true));
-            }
-
-            SigningCredentials = new SigningCredentials(
-                Key, SecurityAlgorithms.RsaSha256Signature);
+            Key = new RsaSecurityKey(provider.ExportParameters(true));
         }
+
+        SigningCredentials = new SigningCredentials(
+            Key, SecurityAlgorithms.RsaSha256Signature);
     }
 }
